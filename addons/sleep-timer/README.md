@@ -12,6 +12,26 @@ place is bedtime in one press: a 30-minute timer plus the Brightness add-on's ni
 off again on the next press. The picker shows when the
 TV will turn off and can cancel the timer.
 
+## Optional custom times
+
+Before building, edit `app/src/main/res/values/options.xml`:
+
+| Option | Default | What it does |
+|---|---|---|
+| `extension_minutes` | `15` | Minutes from pressing the warning's extra-time button, from 1 to 720. Set it to `5` for "5 more minutes". The label follows the configured value; an invalid value falls back to 15. |
+| `custom_minutes_enabled` | `false` | Adds **Custom minutes…** below the unchanged 15/30/60/90/120-minute presets. |
+
+Custom accepts 1–720 whole minutes. Type with the remote's number keys (a keyboard's
+number pad works too), press OK on **Start timer** to confirm, or Back to cancel.
+Delete removes the last digit. Empty, zero, negative, non-numeric, overflowing and
+out-of-range values never start a timer; cancelling leaves any existing timer alone.
+The numeric entry does not open an on-screen keyboard over the controls.
+The quick bar continues to use the original preset times.
+
+The input rules have dependency-free tests in `tests/test_sleep_timer_options.py`:
+from the repo root, with JDK 17 on PATH, run
+`python3 -m unittest discover -s tests -p test_sleep_timer_options.py -v`.
+
 ## How it turns the TV off
 
 An ordinary app cannot put Android to sleep: there is no permission for it. A device admin's `lockNow()` is
