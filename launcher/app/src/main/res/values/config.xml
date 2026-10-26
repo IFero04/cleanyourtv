@@ -236,6 +236,9 @@
     <!-- The date (with the Shamsi and lunar lines) on its own line under the clock instead of beside it, for a top bar
          whose pills leave the date too little room. Can also be set with "date_below_clock" in a theme. -->
     <bool name="date_below_clock">false</bool>
+    <!-- Optional local Weather add-on reading beside the clock (icon + Celsius, original divider).
+         Moves the date below. A theme can enable header_weather; off does no provider or network work. -->
+    <bool name="header_weather">false</bool>
     <!-- The language the launcher shows itself in, as a language tag ("vi", "pt-BR", "ar-EG-u-nu-latn"
          for Arabic with Western digits), instead of the TV's. For firmware
          that has no menu entry for the owner's language although the launcher is translated into it (a China-market

@@ -92,6 +92,8 @@ final class Config {
     final int lunarUtcOffset;
     /** The date on its own line under the clock instead of beside it (config.xml, date_below_clock). */
     final boolean dateBelowClock;
+    /** Local weather icon and Celsius beside the clock, with the date below (header_weather); off by default. */
+    final boolean headerWeather;
     /** The VPN state as its own pill after the network pill, instead of a badge inside it (config.xml, vpn_pill). */
     final boolean vpnPill;
     /** Language tag the launcher shows itself in instead of the TV's, or "" for the TV's (config.xml, locale). */
@@ -272,7 +274,7 @@ final class Config {
                    List<RaceWeekend.Race> raceCalendar, boolean cinematicHome, boolean ambientGlow, boolean appGlow, boolean fadeRows, int homeIdleClockMinutes,
                    boolean keyFilter, boolean dockGlass, String glowStyle, boolean wallpaperCaptions,
                    boolean handleViewInputs, boolean tileMenu, boolean dockEvenPadding, boolean dockBand, boolean cinematicDots, boolean cinematicWhiteFocus, boolean wifiStatusColor, int cinematicScrim, int cinematicArt,
-                   Map<String, Set<String>> wallpaperMoods, boolean gamepadPassthrough, boolean consumeVolumeKeys, boolean powerOnHome, boolean homeLongPressHome, boolean wifiStatusWarnings, List<String> topBarApps, boolean showGreeting, boolean headerWhite, boolean clockWallpaper, int clockWallpaperDim, boolean clockGlow, String glassStyle, boolean singleRow, boolean dockBandAll, boolean lunarDate, int lunarUtcOffset, boolean dateBelowClock, boolean vpnPill, String locale, boolean powerOnHomeAlways, boolean inputsConnectedOnly) {
+                    Map<String, Set<String>> wallpaperMoods, boolean gamepadPassthrough, boolean consumeVolumeKeys, boolean powerOnHome, boolean homeLongPressHome, boolean wifiStatusWarnings, List<String> topBarApps, boolean showGreeting, boolean headerWhite, boolean clockWallpaper, int clockWallpaperDim, boolean clockGlow, String glassStyle, boolean singleRow, boolean dockBandAll, boolean lunarDate, int lunarUtcOffset, boolean dateBelowClock, boolean vpnPill, String locale, boolean powerOnHomeAlways, boolean inputsConnectedOnly, boolean headerWeather) {
         this.handleViewInputs = handleViewInputs;
         this.tileMenu = tileMenu;
         this.inputKeycodes = inputKeycodes;
@@ -304,6 +306,7 @@ final class Config {
         this.lunarDate = lunarDate;
         this.lunarUtcOffset = lunarUtcOffset;
         this.dateBelowClock = dateBelowClock;
+        this.headerWeather = headerWeather;
         this.vpnPill = vpnPill;
         this.locale = locale;
         this.greetingName = greetingName;
@@ -488,6 +491,7 @@ final class Config {
         String glowStyle = res.getString(R.string.glow_style);
         boolean wifiStatusWarnings = res.getBoolean(R.bool.wifi_status_warnings);
         boolean dateBelowClock = res.getBoolean(R.bool.date_below_clock);
+        boolean headerWeather = res.getBoolean(R.bool.header_weather);
         boolean vpnPill = res.getBoolean(R.bool.vpn_pill);
         String locale = res.getString(R.string.locale).trim();
         List<String> topBarApps = new ArrayList<>(Arrays.asList(res.getStringArray(R.array.top_bar_apps)));
@@ -593,6 +597,7 @@ final class Config {
             if (moods != null) wallpaperMoods = moods(moods);
             wifiStatusWarnings = bool(json, "wifi_status_warnings", wifiStatusWarnings);
             dateBelowClock = bool(json, "date_below_clock", dateBelowClock);
+            headerWeather = bool(json, "header_weather", headerWeather);
             vpnPill = bool(json, "vpn_pill", vpnPill);
             locale = string(json, "locale", locale).trim();
             topBarApps = stringList(json, "top_bar_apps", topBarApps);
@@ -665,7 +670,7 @@ final class Config {
                 dockBand, cinematicDots, cinematicWhiteFocus, wifiStatusColor, cinematicScrim, cinematicArt, wallpaperMoods, gamepadPassthrough,
                 consumeVolumeKeys, powerOnHome, homeLongPressHome, wifiStatusWarnings, topBarApps, showGreeting, headerWhite, clockWallpaper,
                 Math.max(0, Math.min(90, clockWallpaperDim)), clockGlow, glassStyle, singleRow && dockRow, dockBandAll, lunar, lunarOffset,
-                dateBelowClock, vpnPill, locale, powerOnHomeAlways, inputsConnectedOnly);
+                dateBelowClock, vpnPill, locale, powerOnHomeAlways, inputsConnectedOnly, headerWeather);
     }
 
     /**
