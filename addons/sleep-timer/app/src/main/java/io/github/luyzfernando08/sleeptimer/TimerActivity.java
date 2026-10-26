@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -59,11 +60,32 @@ public class TimerActivity extends Activity {
             if (first == null) first = row;
         }
         if (getResources().getBoolean(R.bool.custom_minutes_enabled)) {
-            TextView custom = Ui.row(root, 798);
+            LinearLayout actions = new LinearLayout(this);
+            actions.setOrientation(LinearLayout.HORIZONTAL);
+            actions.setGravity(Gravity.CENTER_HORIZONTAL);
+            root.addView(actions);
+            TextView custom = Ui.row(actions, 393);
+            ((LinearLayout.LayoutParams) custom.getLayoutParams()).setMarginEnd(Ui.dp(this, 12));
             custom.setText(R.string.custom);
+            custom.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_custom_minutes, 0, 0, 0);
+            custom.setCompoundDrawablePadding(Ui.dp(this, 12));
             custom.setOnClickListener(v -> showCustomMinutes());
+            cancel = Ui.dangerRow(actions, 393);
+            cancel.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_cancel_timer, 0, 0, 0);
+            cancel.setCompoundDrawablePadding(Ui.dp(this, 12));
+            // Without explicit row edges, pixel rounding can send Right from Cancel diagonally
+            // back to a preset on some TVs. Keep horizontal travel in this row and clamp its ends.
+            custom.setId(View.generateViewId());
+            cancel.setId(View.generateViewId());
+            custom.setNextFocusLeftId(custom.getId());
+            custom.setNextFocusRightId(cancel.getId());
+            cancel.setNextFocusLeftId(custom.getId());
+            cancel.setNextFocusRightId(cancel.getId());
+            custom.setNextFocusDownId(custom.getId());
+            cancel.setNextFocusDownId(cancel.getId());
+        } else {
+            cancel = Ui.row(root, 798);
         }
-        cancel = Ui.row(root, 798);
         cancel.setText(R.string.cancel);
         cancel.setOnClickListener(v -> {
             Timer.cancel(this);
