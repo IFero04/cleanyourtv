@@ -174,6 +174,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     private int ambientColor = -1;
     private ValueAnimator ambientAnimator;
     private boolean heroShown;
+    private boolean dockTitle;
     private boolean animations;
     private boolean advancedEffects;
     private TextView greeting;
@@ -468,7 +469,8 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         if (cinematic) setUpCinematicShelf(cfg.cinematicScrim);
         // dock_title false: the name above the dock (and the cinematic lines under it) never shows; the glow
         // still follows the dock.
-        if (!cfg.dockTitle) hero.setVisibility(View.GONE);
+        dockTitle = cfg.dockTitle;
+        if (!dockTitle) hero.setVisibility(View.GONE);
         greeting = findViewById(R.id.greeting);
         clockBlock = findViewById(R.id.leftBlock);
         greetingColor = greeting.getCurrentTextColor();
@@ -2602,6 +2604,9 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     private void updateRace() {
         // an empty calendar (a theme without race_calendar, or a reset) hides a panel the last theme showed
         RaceWeekend.State s = raceCalendar.isEmpty() ? null : RaceWeekend.at(raceCalendar, java.time.Instant.now());
+        // F1 owns the shelf during its window. Keep its measured space and focus-driven state intact:
+        // the right app title returns automatically at the next tick, without moving the dock or focus.
+        hero.setVisibility(!dockTitle ? View.GONE : s != null ? View.INVISIBLE : View.VISIBLE);
         if (s == null) {
             racePanel.setVisibility(View.GONE);
             return;

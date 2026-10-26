@@ -30,6 +30,14 @@
         android:layout_height="match_parent"
         android:alpha="0" />
 
+    <!-- Cinematic top shelf: behind all shelf text, including the race-weekend panel. -->
+    <View
+        android:id="@+id/heroScrim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:importantForAccessibility="no" />
+
     <!-- Race-weekend panel (a theme's race_calendar, see RaceWeekend): in the free space under the clock,
          shown only from shortly before a weekend's first session until the race is over. Updated once a
          minute with the clock, never animated. -->
@@ -93,15 +101,6 @@
             android:fontFamily="@string/font_medium"
             android:letterSpacing="0.12" />
     </LinearLayout>
-
-    <!-- Cinematic top shelf: darkens the edge behind the shelf and the lower half, so the text and the
-         dock stay readable over the artwork. -->
-    <View
-        android:id="@+id/heroScrim"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:importantForAccessibility="no" />
 
     <!-- Top shelf: the focused dock app's name, positioned above the dock in code. -->
     <LinearLayout
