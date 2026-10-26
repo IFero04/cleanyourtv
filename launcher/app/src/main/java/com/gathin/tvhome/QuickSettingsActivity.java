@@ -43,8 +43,11 @@ public final class QuickSettingsActivity extends Activity {
         addRow(rows, R.drawable.ic_settings, R.string.tv_settings, 0, SystemSettings.intent(this, Settings.ACTION_SETTINGS));
         addRow(rows, R.drawable.ic_picture, R.string.quick_picture, 0, SystemSettings.intent(this, Settings.ACTION_DISPLAY_SETTINGS));
         addRow(rows, R.drawable.ic_wifi, R.string.quick_network, 0, SystemSettings.intent(this, Settings.ACTION_WIFI_SETTINGS));
-        addRow(rows, R.drawable.ic_apps, R.string.quick_apps, R.string.quick_apps_hint,
-                SystemSettings.intent(this, Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS));
+        boolean library = Config.load(this).appLibrary;
+        addRow(rows, R.drawable.ic_apps, library ? R.string.app_library : R.string.quick_apps,
+                library ? 0 : R.string.quick_apps_hint,
+                library ? new Intent(this, MainActivity.class).setAction(MainActivity.ACTION_APP_LIBRARY)
+                        : SystemSettings.intent(this, Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS));
         // Through Home, so it rebuilds with the new choices when Launcher settings closes.
         addRow(rows, R.drawable.ic_home_settings, R.string.launcher_settings, 0,
                 new Intent(this, MainActivity.class).setAction(MainActivity.ACTION_LAUNCHER_SETTINGS));
