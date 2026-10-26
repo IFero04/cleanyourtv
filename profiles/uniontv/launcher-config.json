@@ -1,0 +1,225 @@
+{
+  "dock_apps": [
+    "org.smarttube.stable",
+    "org.jellyfin.androidtv",
+    "com.amazon.amazonvideo.livingroom",
+    "io.github.luyzfernando08.sleeptimer"
+  ],
+  "hidden_apps": [
+    "com.tcl.tv",
+    "com.tcl.partnercustomizer"
+  ],
+  "live_tv_package": "com.tcl.tv",
+  "columns": 4,
+  "rows_below_dock": 0,
+  "background_color": "#000000",
+  "dock_glass": true,
+  "dock_band": true,
+  "glass_style": "rim",
+  "dock_title": true,
+  "cinematic_home": true,
+  "dock_opacity": 100,
+  "fill_dock": true,
+  "ambient_glow": false,
+  "app_glow": true,
+  "icon_only_buttons": true,
+  "icon_only_inputs": true,
+  "wifi_status_color": true,
+  "wifi_status_warnings": true,
+  "wifi_label_width": 0,
+  "tile_menu": true,
+  "app_library": true,
+  "library_ok_opens": true,
+  "wallpaper": true,
+  "wallpaper_true_color": true,
+  "wallpaper_rotation_minutes": 60,
+  "wallpaper_moods": {
+    "morning": [
+      "6am_4pm.jpg"
+    ],
+    "evening": [
+      "4pm_9pm.jpg"
+    ],
+    "night": [
+      "9pm_6am.jpg"
+    ]
+  },
+  "wallpaper_dim": 10,
+  "wallpaper_order": "sequential",
+  "animations": true,
+  "reduced_motion": false,
+  "advanced_effects": true,
+  "boot_to_live_tv": false,
+  "power_on_home": false,
+  "sky_intensity": 60,
+  "locale": "en-PT",
+  "date_below_clock": true,
+  "settings_key_panel": true,
+  "key_filter": false,
+  "consume_volume_keys": false,
+  "open_on_start_choice": true,
+  "race_calendar": [
+    {
+      "round": 18,
+      "name": "United States Grand Prix",
+      "place": "Austin",
+      "sessions": [
+        {
+          "name": "FP1",
+          "start": "2026-10-23T17:30:00Z"
+        },
+        {
+          "name": "FP2",
+          "start": "2026-10-23T21:00:00Z"
+        },
+        {
+          "name": "FP3",
+          "start": "2026-10-24T17:30:00Z"
+        },
+        {
+          "name": "QUALIFYING",
+          "start": "2026-10-24T21:00:00Z"
+        },
+        {
+          "name": "RACE",
+          "start": "2026-10-25T20:00:00Z"
+        }
+      ]
+    },
+    {
+      "round": 19,
+      "name": "Mexico City Grand Prix",
+      "place": "Mexico City",
+      "sessions": [
+        {
+          "name": "FP1",
+          "start": "2026-10-30T18:30:00Z"
+        },
+        {
+          "name": "FP2",
+          "start": "2026-10-30T22:00:00Z"
+        },
+        {
+          "name": "FP3",
+          "start": "2026-10-31T17:30:00Z"
+        },
+        {
+          "name": "QUALIFYING",
+          "start": "2026-10-31T21:00:00Z"
+        },
+        {
+          "name": "RACE",
+          "start": "2026-11-01T20:00:00Z"
+        }
+      ]
+    },
+    {
+      "round": 20,
+      "name": "Brazilian Grand Prix",
+      "place": "São Paulo",
+      "sessions": [
+        {
+          "name": "FP1",
+          "start": "2026-11-06T15:30:00Z"
+        },
+        {
+          "name": "FP2",
+          "start": "2026-11-06T19:00:00Z"
+        },
+        {
+          "name": "FP3",
+          "start": "2026-11-07T14:30:00Z"
+        },
+        {
+          "name": "QUALIFYING",
+          "start": "2026-11-07T18:00:00Z"
+        },
+        {
+          "name": "RACE",
+          "start": "2026-11-08T17:00:00Z"
+        }
+      ]
+    },
+    {
+      "round": 21,
+      "name": "Las Vegas Grand Prix",
+      "place": "Las Vegas",
+      "sessions": [
+        {
+          "name": "FP1",
+          "start": "2026-11-20T00:30:00Z"
+        },
+        {
+          "name": "FP2",
+          "start": "2026-11-20T04:00:00Z"
+        },
+        {
+          "name": "FP3",
+          "start": "2026-11-21T00:30:00Z"
+        },
+        {
+          "name": "QUALIFYING",
+          "start": "2026-11-21T04:00:00Z"
+        },
+        {
+          "name": "RACE",
+          "start": "2026-11-22T04:00:00Z"
+        }
+      ]
+    },
+    {
+      "round": 22,
+      "name": "Qatar Grand Prix",
+      "place": "Lusail",
+      "sessions": [
+        {
+          "name": "FP1",
+          "start": "2026-11-27T13:30:00Z"
+        },
+        {
+          "name": "FP2",
+          "start": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "FP3",
+          "start": "2026-11-28T14:30:00Z"
+        },
+        {
+          "name": "QUALIFYING",
+          "start": "2026-11-28T18:00:00Z"
+        },
+        {
+          "name": "RACE",
+          "start": "2026-11-29T16:00:00Z"
+        }
+      ]
+    },
+    {
+      "round": 23,
+      "name": "Abu Dhabi Grand Prix",
+      "place": "Abu Dhabi",
+      "sessions": [
+        {
+          "name": "FP1",
+          "start": "2026-12-04T09:30:00Z"
+        },
+        {
+          "name": "FP2",
+          "start": "2026-12-04T13:00:00Z"
+        },
+        {
+          "name": "FP3",
+          "start": "2026-12-05T10:30:00Z"
+        },
+        {
+          "name": "QUALIFYING",
+          "start": "2026-12-05T14:00:00Z"
+        },
+        {
+          "name": "RACE",
+          "start": "2026-12-06T13:00:00Z"
+        }
+      ]
+    }
+  ]
+}
