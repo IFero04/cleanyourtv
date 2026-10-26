@@ -15,7 +15,8 @@ sky-blue glow; on any other Android TV home it is an ordinary app.
 - **Snow, not rain, near freezing.** The models type precipitation by the air temperature and call snow
   "light rain" at 1 °C (ICON and GFS did, in a Ulaanbaatar blizzard). The app decides by the wet-bulb
   temperature instead, which counts how dry the air is: at 1 °C or below, rain and drizzle are shown as snow.
-- It reads Open-Meteo only while the page is on screen, every 30 minutes, or 5 minutes after a failure.
+- The page reads Open-Meteo while it is on screen, every 30 minutes, or 5 minutes after a failure.
+  This fork also offers the optional, demand-driven Home header below.
 - Degrees Celsius by default (Fahrenheit is an option below), English words; day names follow the TV's language.
 
 ## Options
@@ -33,6 +34,45 @@ Set in `app/src/main/res/values/options.xml` before building. With the defaults 
 ![A week, with humidity and wind](https://raw.githubusercontent.com/majnioui/cleanyourtv-contrib/pr-assets/addon-weather-week/weather-options.png)
 
 ## Permissions
+
+### Optional Home header
+
+This fork's launcher can set `"header_weather": true` in its theme to show a
+small white condition icon and Celsius temperature to the right of the clock,
+separated by the original vertical line. The date moves below; the header is not
+a D-pad target. The option is off by default, with no provider access or extra
+worker when off. It does not remap remote buttons or enable a key helper.
+
+Choose a city in the Weather app as usual. It stays in that app's private
+preferences; no city or coordinates belong in the launcher theme. Both apps must
+be built with the **same signing key**, such as the existing local debug key.
+An absent, old, disabled, differently signed or unconfigured source is simply
+hidden, together with the weather's divider; the date and Home remain usable.
+
+On returning Home, the launcher makes one off-UI-thread local call to
+`content://io.github.sumyabazar1.weather.current`, method `current`, with no
+arguments. The provider authenticates the actual calling package and its signing
+key; only `com.gathin.tvhome` with the same signer is accepted. The launcher also
+checks the source package and signer. There is no general query, file access,
+preference editor or caller-supplied location/URL.
+
+The response contains only `temperature_c` (double), `code` (WMO integer), `day`
+(boolean), `updated_at` (Unix milliseconds of the successful fetch) and `condition`
+(existing translated weather words for accessibility). No location is returned.
+The provider makes one small current-weather request, using the existing private
+city, only when its successful cache is 30 minutes old; failures have a five-minute
+retry delay, attempted only on a later Home visit. It does not download the daily
+forecast or air-quality data for the header. A request already in flight may finish
+after Home is left, but no job, service, alarm or background refresh loop is added.
+
+The launcher has **no INTERNET permission** and never fetches weather itself. It
+does not poll the provider, including from its existing minute tick: that tick
+only hides a reading once it becomes an hour old. Returning Home refreshes it;
+leaving Home visible indefinitely does not keep downloading data. Recent cached
+data can remain visible offline; expired, future-dated, invalid or unknown-code
+readings are hidden rather than displayed as current or sunny.
+
+### Existing Weather permissions
 
 | Permission | Why |
 |---|---|

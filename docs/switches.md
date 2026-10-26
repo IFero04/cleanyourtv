@@ -49,6 +49,7 @@ fits the rules; keys from before the rule sit on its wanted list until a screens
 | `show_library_pill` | <img src="switches/show_library_pill.jpg" width="320" alt="show_library_pill on a TV"> |
 | `library_ok_opens` | <img src="switches/library_ok_opens.jpg" width="320" alt="library_ok_opens on a TV"> |
 | `date_below_clock` | <img src="switches/date_below_clock.jpg" width="320" alt="date_below_clock on a TV"> |
+| `header_weather` | <img src="switches/header_weather.jpg" width="320" alt="An anonymous TV Home example: weather icon and Celsius beside the clock, separated by a vertical line, with the date underneath"> |
 | `locale` | <img src="switches/locale.jpg" width="320" alt="locale set to en on a TV whose system language is Vietnamese"> |
 | `power_on_home` | <img src="switches/power_on_home.jpg" width="320" alt="power_on_home on a TV"> |
 | `home_long_press_home` | <img src="switches/home_long_press_home.jpg" width="320" alt="home_long_press_home on a TV"> |
