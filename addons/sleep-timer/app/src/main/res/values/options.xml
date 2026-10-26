@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Minutes from pressing the warning's extra-time button. Keep the original default. -->
+    <integer name="extension_minutes">15</integer>
+    <!-- Add a confirmed 1–720 minute entry below the unchanged preset buttons. -->
+    <bool name="custom_minutes_enabled">false</bool>
+</resources>

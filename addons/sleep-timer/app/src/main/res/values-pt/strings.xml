@@ -9,9 +9,14 @@
     <string name="no_service">O serviço de acessibilidade do Desligar está desligado (rode o script de instalação).</string>
     <string name="warning_title">A TV vai desligar</string>
     <string name="warning_seconds">em %1$d segundos</string>
-    <string name="more">Mais 15 minutos</string>
+    <string name="more">Mais %1$d minutos</string>
     <string name="now">Desligar agora</string>
     <string name="service_label">Desligar</string>
     <string name="service_description">Só põe a TV em espera quando o timer do Desligar acaba. Não lê a tela.</string>
     <string name="quick_hint">◀ ▶ escolher o tempo   OK fechar</string>
+    <string name="custom">Minutos personalizados…</string>
+    <string name="custom_title">Tempo personalizado</string>
+    <string name="custom_hint">Use as teclas numéricas do comando. OK inicia; Voltar cancela.</string>
+    <string name="custom_range">Introduza %1$d–%2$d minutos.</string>
+    <string name="custom_start">Iniciar timer</string>
 </resources>

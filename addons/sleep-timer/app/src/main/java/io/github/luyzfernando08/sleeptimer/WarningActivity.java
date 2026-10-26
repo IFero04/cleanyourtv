@@ -50,10 +50,11 @@ public class WarningActivity extends Activity {
         seconds = Ui.text(this, 22, 0xFFB9B2FF);
         seconds.setPadding(0, Ui.dp(this, 6), 0, Ui.dp(this, 14));
         box.addView(seconds);
+        int extensionMinutes = TimerOptions.extensionMinutes(getResources().getInteger(R.integer.extension_minutes));
         TextView more = Ui.row(box, 420);
-        more.setText(R.string.more);
+        more.setText(getString(R.string.more, extensionMinutes));
         more.setOnClickListener(v -> {
-            Timer.start(this, 15);
+            Timer.start(this, extensionMinutes);
             finish();
         });
         TextView now = Ui.row(box, 420);
