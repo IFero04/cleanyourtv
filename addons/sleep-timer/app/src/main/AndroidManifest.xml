@@ -50,7 +50,7 @@
             <meta-data android:name="com.gathin.tvhome.card" android:resource="@xml/module_card" />
         </activity>
 
-        <!-- The last minute: a countdown over whatever is playing, with "15 more minutes" and "Now". -->
+        <!-- The last minute: a countdown over whatever is playing, with extra time and "Now". -->
         <activity
             android:name=".WarningActivity"
             android:exported="false"

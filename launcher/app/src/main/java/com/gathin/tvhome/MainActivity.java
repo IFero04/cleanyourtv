@@ -104,6 +104,8 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     private static final int LAUNCHER_SETTINGS_REQUEST = 42;
     /** Sent by QuickSettingsActivity: open Launcher settings from here so Home rebuilds when they close. */
     static final String ACTION_LAUNCHER_SETTINGS = "com.gathin.tvhome.action.LAUNCHER_SETTINGS";
+    /** Quick settings' App library row reuses Home's existing picker. */
+    static final String ACTION_APP_LIBRARY = "com.gathin.tvhome.action.APP_LIBRARY";
     /** The system input switcher, forwarded here by InputsRequestActivity while handle_view_inputs is on. */
     static final String ACTION_VIEW_INPUTS = "com.android.tv.action.VIEW_INPUTS";
     /** Tiles per row and dock slots (res/values/config.xml, columns). Set in onCreate. */
@@ -295,6 +297,8 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     /** Tile menu's "Add to dock": the app waiting for a dock place in edit-dock mode, or null. */
     private String dockEditAppKey;
     private AppLibraryDialog appLibrary;
+    private boolean appLibraryRequestPending;
+    private boolean libraryFromSettings;
     private boolean appLibrarySelection;
     private boolean libraryOkOpens;
     private boolean libraryFocusPending;
@@ -723,7 +727,8 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         btnSettings.setOnClickListener(v -> {
             if (launcherSettingsButton) startActivityForResult(
                     new Intent(this, LauncherSettingsActivity.class), LAUNCHER_SETTINGS_REQUEST);
-            else open(systemIntent(Settings.ACTION_SETTINGS));
+            else open(settingsKeyPanel ? new Intent(this, QuickSettingsActivity.class)
+                    : systemIntent(Settings.ACTION_SETTINGS));
         });
         btnReorder = findViewById(R.id.btnReorder);
         btnReorder.setOnClickListener(v -> toggleReorder());
@@ -843,7 +848,8 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
                     .build(), vpnCallback);
         }
         // Not after recreate(): the launch intent survives it and would open the settings again.
-        if (savedInstanceState == null && !openLauncherSettingsIfAsked(getIntent())) openInputsIfAsked(getIntent());
+        if (savedInstanceState == null && !openLauncherSettingsIfAsked(getIntent())
+                && !openAppLibraryIfAsked(getIntent())) openInputsIfAsked(getIntent());
     }
 
     /**
@@ -903,6 +909,27 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         return true;
     }
 
+    private boolean openAppLibraryIfAsked(Intent intent) {
+        if (intent == null || !ACTION_APP_LIBRARY.equals(intent.getAction())) return false;
+        setIntent(new Intent(Intent.ACTION_MAIN));
+        if (!appLibraryEnabled) return true;
+        appLibraryRequestPending = true;
+        // Android 9 can briefly resume/pause Home around a new intent. Do not open a popup in that gap.
+        root.post(this::startPendingAppLibrary);
+        return true;
+    }
+
+    private void startPendingAppLibrary() {
+        if (!appLibraryRequestPending || !tilesReady || !hasWindowFocus() || isFinishing()
+                || cardPrompt != null) return;
+        appLibraryRequestPending = false;
+        findViewById(R.id.btnSettings).requestFocus();
+        onLibraryRequested();
+        libraryFromSettings = true;
+        if (adapter.appCount() > 0) appLibrary.focusPackage(
+                adapter.packageAt(Math.max(0, Math.min(lastFocused, adapter.appCount() - 1))));
+    }
+
     /**
      * Home pressed while Home is already in front: singleTask delivers it here, then onResume runs.
      * Back to the top with the first dock tile focused, like the stock launcher. Back from an app
@@ -912,6 +939,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (openLauncherSettingsIfAsked(intent)) return;
+        if (openAppLibraryIfAsked(intent)) return;
         if (openInputsIfAsked(intent)) return;
         if (intent == null || !intent.hasCategory(Intent.CATEGORY_HOME)) return;
         grid.scrollToPosition(0);
@@ -1082,6 +1110,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             tilesReady = true;
             startPendingSettingsReorder();
             showCardPrompt();
+            startPendingAppLibrary();
         }
     }
 
@@ -1136,6 +1165,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             tilesReady = true;
             startPendingSettingsReorder();
             showCardPrompt();
+            startPendingAppLibrary();
         });
     }
 
@@ -1210,6 +1240,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             startPendingSettingsReorder();
             if (libraryFocusPending && appLibrary == null) focusLibrary();
             showCardPrompt();
+            startPendingAppLibrary();
         }
     }
 
@@ -1600,9 +1631,15 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         libraryFocusPending = false;
         libraryFromTopBar = false;
         libraryFromVpnPill = false;
+        libraryFromSettings = false;
         appLibrary = new AppLibraryDialog(this, animations, reducedMotion, appLibrarySelection, libraryOkOpens, adapter::containsPackage, () -> reloadApps(false), () -> {
             appLibrary = null;
             openPopup = null;
+            if (libraryFromSettings) {
+                libraryFromSettings = false;
+                findViewById(R.id.btnSettings).requestFocus();
+                return;
+            }
             if (libraryFromTopBar) {
                 libraryFromTopBar = false;
                 btnLibraryTop.requestFocus();

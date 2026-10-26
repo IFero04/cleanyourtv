@@ -147,8 +147,10 @@
          after a HOME_KEY_SERVICE=1 rebuild. Leave empty to omit. -->
     <integer-array name="settings_key_keycodes">
     </integer-array>
-    <!-- What those Settings buttons open: false, the TV's Settings; true, a small glass panel at the top right
+    <!-- What those Settings buttons and the normal Home Settings gear open: false, the TV's Settings;
+         true, a small glass panel at the top right
          with TV settings, Display, Network, Apps (re-enable an app) and Launcher settings, over whatever is on screen.
+         The gear needs no key helper; launcher_settings_button and top_menu keep their own click actions.
          Both keys can also be set from a theme's config.json ("settings_key_keycodes": [83]). -->
     <bool name="settings_key_panel">false</bool>
 
@@ -370,7 +372,8 @@
          Off by default because the chooser is also available from launcher settings. -->
     <bool name="show_home_settings_shortcut">false</bool>
 
-    <!-- Installed launchable apps, including ordinary Android apps. Also settable in config.json. -->
+    <!-- Installed launchable apps, including ordinary Android apps. Also settable in config.json.
+         When enabled, quick settings' Apps row opens this library instead of system app management. -->
     <bool name="app_library">false</bool>
     <!-- Every app tile is its icon on a card tinted from that icon, name only under the focused tile,
          instead of each app's own banner. Off by default; a theme can set "uniform_tiles": true. -->

@@ -190,6 +190,11 @@ final class AppLibraryDialog {
         load(true);
     }
 
+    /** The quick-panel entry starts by the current Home app, not a manufacturer utility. */
+    void focusPackage(String pkg) {
+        selectedPackage = pkg;
+    }
+
     private void reveal() {
         popup.showAtLocation(activity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
         View container = panel.getRootView();

@@ -9,9 +9,14 @@
     <string name="no_service">睡眠定時的無障礙服務未開啟（請執行安裝腳本）。</string>
     <string name="warning_title">電視即將關閉</string>
     <string name="warning_seconds">%1$d 秒後</string>
-    <string name="more">再 15 分鐘</string>
+    <string name="more">再 %1$d 分鐘</string>
     <string name="now">立即關閉</string>
     <string name="service_label">睡眠定時</string>
     <string name="service_description">只在睡眠定時結束時讓電視待機，不讀取畫面。</string>
     <string name="quick_hint">◀ ▶ 選擇時間　OK 關閉</string>
+    <string name="custom">自訂分鐘數…</string>
+    <string name="custom_title">自訂睡眠時間</string>
+    <string name="custom_hint">使用遙控器數字鍵輸入。按 OK 啟動，返回取消。</string>
+    <string name="custom_range">請輸入 %1$d–%2$d 分鐘。</string>
+    <string name="custom_start">啟動定時</string>
 </resources>
