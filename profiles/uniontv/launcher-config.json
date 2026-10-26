@@ -54,6 +54,7 @@
   "sky_intensity": 60,
   "locale": "en-PT",
   "date_below_clock": true,
+  "header_weather": true,
   "settings_key_panel": true,
   "key_filter": false,
   "consume_volume_keys": false,

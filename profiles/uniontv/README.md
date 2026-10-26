@@ -9,6 +9,12 @@ anything to a TV automatically.
 - [Launcher config template](launcher-config.json): four dock slots in the order SmartTube,
   Jellyfin, Prime Video, Sleep Timer; English `en-PT`; icon-only Wi-Fi; the
   customised Retro appearance, animations and sky intensity 60.
+- Optional `header_weather`: a white condition icon and Celsius temperature
+  beside the clock, with the original divider and the date still underneath.
+  Install both updated apps with the same signing key and choose your city in
+  Weather; no location is included here. See the
+  [local Weather integration](../../addons/weather/README.md#optional-home-header)
+  for refresh, offline and stale-data behaviour.
 - The Home gear opens CleanYourTV's quick panel. **App library** replaces the
   native Apps shortcut there, without the **Re-enable** hint. OK opens apps;
   holding OK offers Home-shortcut actions; Back returns focus to the gear.
@@ -88,7 +94,9 @@ you apply this profile. For installation and permission details, see the
 ## Verification scope
 
 The original custom gear/library and Sleep Timer behaviour was accepted on the
-real UnionTV. The subsequent upstream merge is checked with repository tests,
-launcher JVM tests, release lint/build and the APK size gate, plus Sleep Timer
-build checks. The merged upstream version is not claimed to have been installed
-or retested on that TV. No binaries or private TV records are published.
+real UnionTV. The upstream merge and optional header are checked with repository
+tests, launcher/Weather JVM tests, release lint/build and the APK size gate, plus
+Sleep Timer build checks. The header has an anonymous real-TV example in the
+switches guide; that is the only TV image approved for publication. No binaries,
+private TV records or location settings are published. This is not a performance
+benchmark or a long-duration soak test.
