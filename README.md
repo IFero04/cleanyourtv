@@ -39,6 +39,12 @@ until the 19th; old links work.
 tools live only in this repo. Other domains using the name, such as cleanyourtv.com, are not run by
 this project ([#1004](https://github.com/Gathin23/cleanyourtv/issues/1004)).
 
+**This fork:** keeps the custom Home-gear quick panel, styled App library and
+Sleep Timer options alongside upstream updates. The optional
+[UnionTV configuration profile](profiles/uniontv/README.md) saves the launcher
+appearance, app order and timer settings without location or private TV data;
+shared defaults are unchanged.
+
 ## How it works
 
 Android TVs have the same debug bridge as Android phones. Switch on USB debugging in the TV's
