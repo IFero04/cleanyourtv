@@ -1,11 +1,37 @@
 package io.github.sumyabazar1.weather;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 /** The tables that turn Open-Meteo's numbers into words and colours. */
 public class ForecastTest {
+    @Test public void headerRequestIsSmallAndUsesLocaleIndependentCoordinates() {
+        java.util.Locale original = java.util.Locale.getDefault();
+        try {
+            java.util.Locale.setDefault(java.util.Locale.GERMANY);
+            String url = Forecast.currentUrl(12.3456, -23.4567);
+            assertTrue(url.startsWith("https://api.open-meteo.com/v1/forecast?latitude=12.3456&longitude=-23.4567"));
+            assertTrue(url.contains("weather_code,is_day"));
+            assertFalse(url.contains("daily="));
+            assertFalse(url.contains("aqi"));
+        } finally {
+            java.util.Locale.setDefault(original);
+        }
+    }
+
+    @Test public void aMissingOrCorruptPlaceCannotBecomeARequest() {
+        for (double[] point : new double[][]{{Double.NaN, 0}, {0, Double.POSITIVE_INFINITY}, {91, 0}, {0, -181}}) {
+            assertFalse(Forecast.validPlace(point[0], point[1]));
+            try {
+                Forecast.currentUrl(point[0], point[1]);
+                fail("invalid coordinates accepted");
+            } catch (IllegalArgumentException expected) { }
+        }
+        assertTrue(Forecast.validPlace(0, 0));
+        assertTrue(Forecast.validPlace(-90, 180));
+    }
+
     @Test
     public void aqiBandsFollowTheUsScale() {
         assertEquals(0, Forecast.aqiBand(0));

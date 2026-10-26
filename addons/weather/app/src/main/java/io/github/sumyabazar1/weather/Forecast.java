@@ -16,6 +16,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -134,6 +135,26 @@ final class Forecast {
                 code, current.getInt("is_day") == 1,
                 days(reply.getJSONObject("daily")), aqiOrUnknown(where),
                 (int) Math.round(humidity), (int) Math.round(current.optDouble("wind_speed_10m", 0)));
+    }
+
+    /** A single small request for the optional Home header; no daily forecast or air-quality request. */
+    static Report fetchCurrent(double latitude, double longitude) throws IOException, JSONException {
+        JSONObject current = get(currentUrl(latitude, longitude)).getJSONObject("current");
+        double temp = current.getDouble("temperature_2m");
+        double humidity = current.getDouble("relative_humidity_2m");
+        return new Report(temp, temp, snowIfCold(current.getInt("weather_code"), temp, humidity),
+                current.getInt("is_day") == 1, Collections.emptyList(), -1, (int) Math.round(humidity), 0);
+    }
+
+    static boolean validPlace(double latitude, double longitude) {
+        return Double.isFinite(latitude) && Double.isFinite(longitude)
+                && latitude >= -90 && latitude <= 90 && longitude >= -180 && longitude <= 180;
+    }
+
+    static String currentUrl(double latitude, double longitude) {
+        if (!validPlace(latitude, longitude)) throw new IllegalArgumentException("Invalid weather place");
+        return String.format(Locale.ROOT, "https://api.open-meteo.com/v1/forecast?latitude=%.4f&longitude=%.4f",
+                latitude, longitude) + "&models=icon_seamless&current=temperature_2m,relative_humidity_2m,weather_code,is_day";
     }
 
     /**
