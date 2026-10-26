@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Optional profile: keep the shared add-on defaults unchanged. -->
+    <integer name="extension_minutes">5</integer>
+    <bool name="custom_minutes_enabled">true</bool>
+</resources>
