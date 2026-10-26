@@ -19,7 +19,7 @@ Before building, edit `app/src/main/res/values/options.xml`:
 | Option | Default | What it does |
 |---|---|---|
 | `extension_minutes` | `15` | Minutes from pressing the warning's extra-time button, from 1 to 720. Set it to `5` for "5 more minutes". The label follows the configured value; an invalid value falls back to 15. |
-| `custom_minutes_enabled` | `false` | Adds **Custom minutes…** below the unchanged 15/30/60/90/120-minute presets. |
+| `custom_minutes_enabled` | `false` | Adds **Custom minutes…** and a red **Cancel the timer** side by side below the unchanged presets, with edit/cancel icons and a clear focus outline on Cancel. |
 
 Custom accepts 1–720 whole minutes. Type with the remote's number keys (a keyboard's
 number pad works too), press OK on **Start timer** to confirm, or Back to cancel.
