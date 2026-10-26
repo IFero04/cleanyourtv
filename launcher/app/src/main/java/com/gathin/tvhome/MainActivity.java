@@ -197,6 +197,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     private TextView raceKicker, raceHeadline, raceSessions;
     /** config.xml show_stats, overridable by a theme. Off: the line is gone and nothing is read. */
     private boolean showStats;
+    private HeaderWeather headerWeather;
     /** config.xml inputs_connected_only: the Inputs menu lists only connected inputs, the rest behind "More inputs". */
     private boolean inputsConnectedOnly;
     private boolean shamsi;
@@ -378,6 +379,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         public void run() {
             updateGreeting();
             updateRace();
+            if (headerWeather != null) headerWeather.expire();
             // The pill follows the network callbacks and each return to Home; only the diya's flame follows the
             // signal level, so only it needs this minute's binder calls (about 7 ms on the UI thread).
             if (festive) updateWifiLabel();
@@ -508,7 +510,23 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         lunarOffset = Lunar.offsetFor(cfg.lunarUtcOffset, Locale.getDefault());
         if (lunar) lunarDate.setVisibility(View.VISIBLE);
         greetingName = cfg.greetingName;
-        if (cfg.dateBelowClock) moveDateBelowClock();
+        if (cfg.dateBelowClock || cfg.headerWeather) moveDateBelowClock();
+        if (cfg.headerWeather) {
+            // Centre the small weather and original divider against the time, not its text baseline.
+            LinearLayout clockRow = (LinearLayout) findViewById(R.id.clock).getParent();
+            clockRow.setBaselineAligned(false);
+            View line = findViewById(R.id.clockDivider);
+            // The mirrored header originally keeps its date/divider outside the clock's inner row.
+            if (line.getParent() != clockRow) {
+                ((ViewGroup) line.getParent()).removeView(line);
+                clockRow.addView(line, clockRow.indexOfChild(findViewById(R.id.headerWeather)));
+            }
+            LinearLayout.LayoutParams divider = (LinearLayout.LayoutParams) line.getLayoutParams();
+            divider.gravity = Gravity.CENTER_VERTICAL;
+            divider.bottomMargin = 0;
+            headerWeather = new HeaderWeather(this,
+                    findViewById(R.id.headerWeather), line);
+        }
         if (shamsi) {
             shamsiDate.setVisibility(View.VISIBLE);
             TextView date = findViewById(R.id.date);
@@ -1000,6 +1018,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
                 break;
         }
         if (openLiveTvAfterBoot()) return;
+        if (headerWeather != null) headerWeather.resume();
         updateGreeting();
         updateRace();
         // The network and Inputs pills keep their state while Home is in the background, and callbacks update them
@@ -1184,6 +1203,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     @Override
     protected void onPause() {
         super.onPause();
+        if (headerWeather != null) headerWeather.pause();
         root.removeCallbacks(showIdleClock);
         endReorder();   // Home or another app while reordering keeps the order so far
         wallpaperPlayer.stop();
@@ -1247,6 +1267,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (headerWeather != null) headerWeather.close();
         unregisterReceiver(packageReceiver);
         wallpaperPlayer.close();
         ConnectivityManager cm = getSystemService(ConnectivityManager.class);

@@ -299,6 +299,21 @@
                             android:fontFamily="@string/font_light"
                             android:letterSpacing="-0.04"
                             android:includeFontPadding="false" />
+
+                        <!-- Optional local weather; absent, this mirrored header is unchanged. -->
+                        <TextView
+                            android:id="@+id/headerWeather"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:drawablePadding="7dp"
+                            android:singleLine="true"
+                            android:textColor="#E6FFFFFF"
+                            android:textSize="14sp"
+                            android:fontFamily="@string/font_regular"
+                            android:includeFontPadding="false"
+                            android:focusable="false"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                 </LinearLayout>
