@@ -38,6 +38,19 @@ final class Ui {
         return row;
     }
 
+    /** A destructive action stays red and gains a bright outline when the D-pad focuses it. */
+    static TextView dangerRow(LinearLayout parent, int widthDp) {
+        TextView row = row(parent, widthDp);
+        Context ctx = parent.getContext();
+        GradientDrawable focused = pill(ctx, 0xFFB91C1C);
+        focused.setStroke(dp(ctx, 2), 0xFFFECACA);
+        StateListDrawable bg = new StateListDrawable();
+        bg.addState(new int[]{android.R.attr.state_focused}, focused);
+        bg.addState(new int[]{}, pill(ctx, 0xFF7F1D1D));
+        row.setBackground(bg);
+        return row;
+    }
+
     static GradientDrawable pill(Context ctx, int color) {
         GradientDrawable d = new GradientDrawable();
         d.setColor(color);
