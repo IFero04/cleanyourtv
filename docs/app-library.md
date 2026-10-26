@@ -1,5 +1,19 @@
 # App library
 
+## From quick settings
+
+With `app_library` enabled, the quick settings panel offers **App library** in
+place of its system **Apps** shortcut, without the **Re-enable** hint. It opens
+the same glass-style picker over Home, initially focused on the current Home app;
+Back closes it and returns focus to the Settings gear. With the library off,
+that row keeps opening the TV's app manager.
+
+The library lists enabled apps with launch activities and manages Home shortcuts.
+It is not a replacement for Android's app permissions or disabled-package
+controls: use **TV system settings** for those. It never enables, disables or
+uninstalls another app. Use `library_ok_opens` below if OK should always open an
+app instead of adding a missing Home shortcut.
+
 ## Optional selection mode
 
 Set `"app_library_selection": true` along with `"app_library": true` in a theme,
