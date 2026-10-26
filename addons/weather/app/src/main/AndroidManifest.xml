@@ -7,6 +7,10 @@
     <!-- The only permission: Open-Meteo, for the place search, the weather and the air quality. -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <queries>
+        <package android:name="com.gathin.tvhome" />
+    </queries>
+
     <application
         android:allowBackup="false"
         android:banner="@drawable/banner"
@@ -14,6 +18,13 @@
         android:label="@string/app_name"
         android:supportsRtl="false"
         android:theme="@android:style/Theme.Material.NoActionBar.Fullscreen">
+
+        <!-- Optional same-signature Home integration. No jobs/services; reads are authenticated in call(). -->
+        <provider
+            android:name=".WeatherProvider"
+            android:authorities="${applicationId}.current"
+            android:exported="true"
+            android:grantUriPermissions="false" />
 
         <activity
             android:name=".WeatherActivity"
